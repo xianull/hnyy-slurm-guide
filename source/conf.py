@@ -1,0 +1,9 @@
+project = "HNYY 集群 Slurm 使用指南"
+author = "HNYY"
+language = "zh_CN"
+extensions = ["myst_parser"]
+html_theme = "sphinx_rtd_theme"
+html_title = project
+html_show_sourcelink = False
+html_copy_source = False
+html_show_copyright = False
