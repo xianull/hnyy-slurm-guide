@@ -1,6 +1,6 @@
 # 提交模板
 
-仓库的 `templates/` 下有四个模板。复制一份，改 `#SBATCH` 行、conda 环境和最后的命令，再提交：
+仓库的 `templates/` 下有四个模板。复制一份，改 `#SBATCH` 行、conda 环境和最后的命令，再提交。环境怎么建见 {doc}`env`，`-c` 写多少见 {ref}`申请多少资源 <resources>`。
 
 ```bash
 cp templates/gpu.sbatch myjob.sbatch    # 改好后提交

@@ -1,0 +1,2 @@
+/* 表格单元格允许换行，主题默认不换行，长说明会撑出横向滚动条 */
+.wy-table-responsive table td, .wy-table-responsive table th { white-space: normal; }
