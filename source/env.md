@@ -75,4 +75,5 @@ GPU 节点无法访问外网，模型须先在登录节点下载。
 
 1. 作业运行期间，不要修改它正在使用的环境（升级、卸载包）。所有节点读取的是同一份文件，修改立即影响运行中的作业。需要测试新版本时，先克隆一份：`conda create -n myenv2 --clone myenv`。
 2. 作业脚本中用 `source ~/miniforge3/bin/activate myenv` 激活环境。sbatch 脚本不读取 `~/.bashrc`，直接写 `conda activate` 可能报错。
-3. pip 和 conda 的缓存持续增长，安装一次 torch 就有数 GB，应定期清理：`pip cache purge`、`conda clean -a -y`。
+3. 环境和缓存都算在家目录的 200 GB 里。pip 和 conda 的缓存持续增长，安装一次 torch 就有数 GB，应定期清理：`pip cache purge`、`conda clean -a -y`。不再使用的环境用 `conda env remove -n <环境名>` 删除。
+4. Hugging Face 的缓存默认在 `~/.cache/huggingface`，下载的模型会占满家目录。在 `~/.bashrc` 中把它指到项目目录：`export HF_HOME=/gpfs/hybrid/projects/<项目名>/<用户名>/hf_cache`。

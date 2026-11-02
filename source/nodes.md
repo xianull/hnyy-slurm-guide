@@ -87,9 +87,17 @@ Slurm 分配 CPU 时不考虑这一对应关系。数据加载负载高的作业
 
 | 路径 | 所在文件系统 | 用途 |
 |---|---|---|
-| `/gpfs/flash/home/<用户名>` | `/gpfs/flash`，共 307 TB | 家目录：代码、conda 环境 |
-| `/gpfs/hybrid/projects/<项目名>` | `/gpfs/hybrid`，共 552 TB | 项目目录：数据集、模型、实验输出 |
+| `/gpfs/flash/home/<用户名>` | `/gpfs/flash`，共 307 TB | 家目录：代码、conda 环境，上限 200 GB |
+| `/gpfs/hybrid/projects/<项目名>` | `/gpfs/hybrid`，共 552 TB | 项目目录：数据集、模型、实验输出，按项目向管理员申请，见{doc}`account` |
 | `/gpfs/flash/data/models` | `/gpfs/flash` | 公共模型目录，下载模型前先在这里查找 |
+
+查看自己的用量：
+
+```bash
+/usr/lpp/mmfs/bin/mmlsquota -u $USER --block-size G flash hybrid
+```
+
+`GB` 一列是用量，`quota` 和 `limit` 是上限（0 表示未设置）。统计的是整个文件系统上属于你的文件，`/gpfs/flash` 一行包括家目录以外你在 `/gpfs/flash` 下的文件。
 
 ## Slurm
 
