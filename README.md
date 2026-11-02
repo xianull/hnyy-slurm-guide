@@ -4,10 +4,13 @@
 
 | 页面 | 内容 |
 |---|---|
+| [`source/account.md`](source/account.md) | 开号、ssh 登录、密钥、修改密码 |
 | [`source/nodes.md`](source/nodes.md) | 节点配置：处理器、GPU、CPU 亲和性、本地盘、网络、软件、登录节点、存储、Slurm 分区 |
 | [`source/env.md`](source/env.md) | 环境配置：conda、国内源、编译 CUDA 扩展、下载模型 |
 | [`source/commands.md`](source/commands.md) | 申请多少资源（GPU 与 CPU 的比例）、Slurm 常用操作和注意事项 |
 | [`source/templates.md`](source/templates.md) | 提交模板说明，模板文件在 [`templates/`](templates/) |
+| [`source/long.md`](source/long.md) | 超过 7 天的任务（断点续训）、VS Code、Jupyter |
+| [`source/troubleshoot.md`](source/troubleshoot.md) | 作业状态、排队原因、常见问题 |
 
 本地预览：
 

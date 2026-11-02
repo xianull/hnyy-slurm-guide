@@ -3,8 +3,11 @@
 ```{toctree}
 :maxdepth: 2
 
+account
 nodes
 env
 commands
 templates
+long
+troubleshoot
 ```
