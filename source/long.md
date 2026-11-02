@@ -44,9 +44,7 @@ squeue -u $USER                       # 后两段显示 PD (Dependency)
 
 ## VS Code
 
-VS Code 的 Remote-SSH 连接 login-02，在登录节点上编辑代码。GPU 程序在 VS Code 的终端里用 `srun` 或 `sbatch` 运行。
-
-不要用 VS Code 直接连到 GPU 节点运行程序：经 ssh 启动的进程不属于任何作业，Slurm 不会把它用的 GPU 记为已占用，可能再分配给别的作业。
+VS Code 的 Remote-SSH 连接 login-02，在登录节点上编辑代码。GPU 程序在 VS Code 的终端里用 `srun` 或 `sbatch` 运行。GPU 节点不开放 ssh 登录，Remote-SSH 只能连接登录节点。
 
 ## Jupyter
 
