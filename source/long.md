@@ -1,6 +1,6 @@
-# 长任务和交互式开发
+# 长时间训练和交互式开发
 
-## 超过 7 天的任务：断点续训
+## 超过 7 天的训练：断点续训
 
 单个作业最长 7 天。训练要更久时，把它拆成几段作业：每段从最新的 checkpoint 继续，后一段在前一段结束后自动开始。
 
@@ -40,7 +40,7 @@ squeue -u $USER                       # 后两段显示 PD (Dependency)
 
 训练提前完成时，后面的作业读到最终的 checkpoint，`step < total_steps` 不成立，立即退出。
 
-多 GPU 训练用 torchrun 启动时，`SIGUSR1` 会直接终止 torchrun（作业显示 FAILED，退出码 0:10），worker 来不及保存，不能用这个模板的信号方式。改为按固定步数保存 checkpoint，同样用 `--dependency` 续跑，每段最多损失一个保存间隔的进度。
+多 GPU 训练用 torchrun 启动时，不能用这个模板的信号方式：`SIGUSR1` 会直接终止 torchrun（作业显示 FAILED，退出码 0:10），worker 来不及保存。这种情况改为按固定步数保存 checkpoint，同样用 `--dependency` 续跑，每段最多损失一个保存间隔的训练进度。
 
 ## VS Code
 
@@ -50,7 +50,7 @@ VS Code 的 Remote-SSH 连接 login-02，在登录节点上编辑代码。GPU �
 
 ## Jupyter
 
-Jupyter 在作业里运行，自己电脑经登录节点转发端口访问。
+Jupyter 在作业里运行，在自己电脑上经登录节点转发端口访问。
 
 1. 环境里安装 jupyterlab：`pip install jupyterlab`。
 2. 在 login-02 上提交：

@@ -12,7 +12,7 @@ bash Miniforge3-Linux-x86_64.sh -b -p ~/miniforge3
 ~/miniforge3/bin/conda init bash    # 写入 ~/.bashrc，重新登录后在每个节点生效
 ```
 
-Miniforge 默认使用免费的 conda-forge 源，Anaconda 官方源对规模较大的机构收费。`/gpfs/flash/software/anaconda` 是一份所有用户都有写权限的公共 anaconda，任何人都能修改其中的文件，不要把自己的环境建在里面。
+选 Miniforge 是因为它默认使用免费的 conda-forge 源；Anaconda 官方源对规模较大的机构收费。`/gpfs/flash/software/anaconda` 是一份所有用户都有写权限的公共 anaconda，任何人都能修改其中的文件，不要把自己的环境建在里面。
 
 ## 2. 换国内源（只需一次）
 
@@ -28,7 +28,7 @@ pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
 ```bash
 conda create -n myenv python=3.12 -y
 conda activate myenv
-pip install torch                  # PyPI 上默认的 torch 是 CUDA 13 版本，驱动支持
+pip install torch                  # PyPI 上默认的 torch 是 CUDA 13 版本
 pip install -r requirements.txt
 ```
 
@@ -56,7 +56,7 @@ export MAX_JOBS=8                  # 登录节点由所有用户共用，限制�
 pip install flash-attn --no-build-isolation
 ```
 
-项目固定使用 CUDA 12 版本的 torch 时，与系统的 CUDA 13.2 版本不一致，须在环境中另行安装同版本的 CUDA 工具包，再把 `CUDA_HOME` 指向它。
+项目固定使用 CUDA 12 版本的 torch 时，它的 CUDA 版本与系统的 13.2 不一致，须在环境中另行安装 CUDA 12 工具包，再把 `CUDA_HOME` 指向它。
 
 ## 6. 下载模型和数据
 
@@ -76,4 +76,4 @@ GPU 节点无法访问外网，模型须先在登录节点下载。
 1. 作业运行期间，不要修改它正在使用的环境（升级、卸载包）。所有节点读取的是同一份文件，修改立即影响运行中的作业。需要测试新版本时，先克隆一份：`conda create -n myenv2 --clone myenv`。
 2. 作业脚本中用 `source ~/miniforge3/bin/activate myenv` 激活环境。sbatch 脚本不读取 `~/.bashrc`，直接写 `conda activate` 可能报错。
 3. 环境和缓存都算在家目录的 200 GB 里。pip 和 conda 的缓存持续增长，安装一次 torch 就有数 GB，应定期清理：`pip cache purge`、`conda clean -a -y`。不再使用的环境用 `conda env remove -n <环境名>` 删除。
-4. Hugging Face 的缓存默认在 `~/.cache/huggingface`，下载的模型会占满家目录。在 `~/.bashrc` 中把它指到项目目录：`export HF_HOME=/gpfs/hybrid/projects/<项目名>/<用户名>/hf_cache`。
+4. Hugging Face 的缓存默认在 `~/.cache/huggingface`，下载的模型都算在家目录的 200 GB 里。在 `~/.bashrc` 中把缓存改到项目目录：`export HF_HOME=/gpfs/hybrid/projects/<项目名>/<用户名>/hf_cache`。

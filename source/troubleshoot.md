@@ -15,7 +15,7 @@
 | CA | CANCELLED | 被 `scancel` 取消 |
 | NF | NODE_FAIL | 节点故障 |
 
-COMPLETED 只说明脚本最后一条命令的退出码为 0，中间的命令失败了也可能显示 COMPLETED，结果要看日志。
+COMPLETED 只说明脚本最后一条命令的退出码为 0，中间的命令失败了也可能显示 COMPLETED，须查看日志确认。
 
 ## 排队原因
 
@@ -25,9 +25,9 @@ COMPLETED 只说明脚本最后一条命令的退出码为 0，中间的命令�
 |---|---|---|
 | Resources | 空闲的 GPU 或 CPU 不够 | 等待，或减少 GPU 数和 `-c` |
 | Priority | 前面有更早提交的作业在排队 | 等待；`-t` 越短，越容易被回填提前开始 |
-| Dependency | 依赖的作业还没结束 | 正常现象 |
+| Dependency | 依赖的作业还没结束 | 无需处理 |
 | DependencyNeverSatisfied | 依赖的作业已结束，但状态不满足条件，例如 `afterok` 依赖的作业失败了 | `scancel` 后重新提交 |
-| PartitionTimeLimit | `-t` 超过分区上限 7 天 | 永远不会开始，`scancel` 后改小 `-t` 重新提交 |
+| PartitionTimeLimit | `-t` 超过分区上限 7 天 | 不会自动开始，`scancel` 后改小 `-t` 重新提交 |
 | ReqNodeNotAvail | 节点不可用（维护或故障） | 找管理员 |
 
 ## 常见问题
@@ -44,13 +44,13 @@ COMPLETED 只说明脚本最后一条命令的退出码为 0，中间的命令�
 
 Python 的输出写入文件时有缓冲，缓冲区满后才写入。用 `python -u` 运行，或在脚本中 `export PYTHONUNBUFFERED=1`。
 
-### CUDA out of memory，但程序用不了这么多显存
+### 报 CUDA out of memory，但程序本身显存用量不大
 
-分到的 GPU 可能被 Slurm 之外的进程占用。用 `srun --jobid <作业号> --overlap nvidia-smi` 查看显存占用，确认后找管理员。
+分配的 GPU 可能被 Slurm 之外的进程占用。用 `srun --jobid <作业号> --overlap nvidia-smi` 查看显存占用，确认后找管理员。
 
 ### 作业状态为 TIMEOUT
 
-调大 `-t`（最长 `7-00:00:00`），超过 7 天的任务用断点续训，见{doc}`long`。
+调大 `-t`（最长 `7-00:00:00`），超过 7 天的训练用断点续训，见{doc}`long`。
 
 ### 提交时报分区权限错误
 

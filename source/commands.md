@@ -16,7 +16,7 @@ CPU 按 GPU 数申请：
 
 这个比例是整个节点的 CPU 按 GPU 数平分的结果：h100 节点有 192 个 CPU、8 张 GPU，每张 24 个；h200 节点有 224 个 CPU、8 张 GPU，每张 28 个。h200-1 只有 0–3 号 GPU 由 Slurm 管理，4–7 号 GPU 的使用者同样需要 CPU，所以 h200 分区的作业合计不应超过 112 个 CPU。Slurm 不强制这个比例，多占的 CPU 会让后面的作业排队等待。
 
-- `-c` 数的是 CPU（每个物理核 2 个）。Slurm 按整核分配，奇数会向上补成偶数，例如 `-c 3` 实际分到 4 个。
+- `-c` 数的是 CPU（每个物理核 2 个）。Slurm 按整核分配，奇数会向上补成偶数，例如 `-c 3` 实际分配 4 个。
 - 不用 GPU 的纯 CPU 作业（不写 `--gres`）占用的是 GPU 作业的 CPU，`-c` 应尽量小。
 - 内存不按申请分配，不用写 `--mem`。按 GPU 数平分约每张 250 GB，用量远超这个数会影响同一节点上的其他作业。
 - `-t` 应接近实际用时：调度采用回填，用时短的作业可以提前开始。
@@ -28,7 +28,7 @@ CPU 按 GPU 数申请：
 sinfo -N -O "NodeList:10,Partition:8,Gres:16,GresUsed:26,CPUsState:16"
 squeue                                  # 排队和运行中的作业
 squeue -u $USER                         # 只看自己的
-scontrol show job <作业号>              # 作业详情：排队原因、所在节点、分到的 GPU
+scontrol show job <作业号>              # 作业详情：排队原因、所在节点、分配的 GPU
 # 已结束的作业：状态、退出码、用时
 sacct -j <作业号> -X -o JobID,JobName,State,ExitCode,Elapsed,NodeList
 tail -f <作业名>-<作业号>.out           # 日志
